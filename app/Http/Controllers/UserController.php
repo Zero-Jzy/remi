@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -19,16 +20,15 @@ class UserController extends Controller
             $user = User::create($data);
         }
 
-        $err = '';
         if (!Auth::attempt($data)) {
-            $err = 'Login or register fail';
+            Session::flash('err', 'Login or register fail');
         };
 
-        return view('home', ['err' => $err]);
+        return redirect('/');
     }
 
     public function logout(){
         Auth::logout();
-        return view('hone');
+        return response()->back();
     }
 }

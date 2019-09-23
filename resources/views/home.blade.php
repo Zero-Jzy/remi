@@ -15,12 +15,21 @@
 
     <!-- Styles -->
 
+    <style>
+        .movie-box{
+            margin: 15px 0;
+        }
+
+        .movie-box .video,.detail{
+            /*padding: 20px;*/
+        }
+    </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#"><img width="42px" class="mr-3" src="{{asset('home.png')}}" alt="">Funny Movies</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,9 +50,13 @@
             <div>
 
                 <form action="/auth" method="post" class="form-inline d-block my-2 my-lg-0">
+                    @if (session('err'))
+                        <small style="position: absolute; bottom: 0; color: red">{{session('err')}}</small>
+                    @endif
+
                     @csrf
                     <input name="username" class="form-control mr-sm-2" placeholder="Username">
-                    <input name="password" class="form-control mr-sm-2" placeholder="Password">
+                    <input name="password" type="password" class="form-control mr-sm-2" placeholder="Password">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login/Register</button>
                 </form>
             </div>
@@ -51,7 +64,21 @@
     </div>
 </nav>
 <div class="container">
-    @isset($err) <div class="text-center">{{$err}}</div>@endisset
+    <div class="row movie-box">
+        <div class="col-6 video">
+            <iframe width="100%" height="300px" src="https://www.youtube.com/embed/GKiI0RNQuKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+        <div class="col-6 detail">
+            <h3 style="color: red">Alo</h3>
+            <h5>Shared by: phu</h5>
+            <div>
+                <span>89 <img width="16px" src="{{asset('like.png')}}" alt="Like icon"></span>
+                <span>12 <img width="16px" src="{{asset('dislike.png')}}" alt="Dislike icon"></span>
+            </div>
+            <h5>Description :</h5>
+            <p style="font-weight: 600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolorem dolores explicabo illo magni maiores perspiciatis placeat ratione, sapiente! Accusantium ad asperiores beatae ea et perferendis quo repellat sint tempora!</p>
+        </div>
+    </div>
 </div>
 </body>
 </html>
