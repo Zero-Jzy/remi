@@ -8,14 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('form_create_movie');
     }
 
     public function create(Request $request)
     {
-        $key_movie = explode('?v=', $request->get('key_movie'))[1];
+        $regex = '/(^(https:\/\/www.youtube.com\/watch[?]v=)([^&]{11}))/u';
 
+        $request->validate([
+            'url_movie' => 'required|regex:' . $regex,
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $key_movie1 = explode('?v=', $request->get('url_movie'))[1];
+        $key_movie = explode('&', $key_movie1)[0];
         Movie::create([
             'key_movie' => $key_movie,
             'title' => $request->get('title'),
