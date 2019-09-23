@@ -13,10 +13,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'Controller@index');
 
 Route::post('/auth', 'UserController@auth');
 
 Route::post('/logout','UserController@logout')->name('logout');
+
+Route::get('/create_movie', 'MovieController@index');
+
+Route::post('/create_movie', 'MovieController@create');

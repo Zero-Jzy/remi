@@ -10,15 +10,25 @@ use Illuminate\Support\Facades\Session;
 class UserController extends Controller
 {
     public function auth(Request $request){
+         $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
         $data = [
             'username' => $request->get('username'),
             'password' => $request->get('password')
         ];
 
-        $user = User::where($data)->get();
+        $user = User::where($data)->first();
+
         if ($user === null) {
-            $user = User::create($data);
+            $user = User::create([
+                'username' => $request->get('username'),
+                'password' => bcrypt($request->get('password'))
+            ]);
         }
+
 
         if (!Auth::attempt($data)) {
             Session::flash('err', 'Login or register fail');
@@ -29,6 +39,6 @@ class UserController extends Controller
 
     public function logout(){
         Auth::logout();
-        return response()->back();
+        return redirect('/');
     }
 }
