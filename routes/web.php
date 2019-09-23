@@ -11,6 +11,12 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::post('/auth', 'UserController@auth');
+
+Route::post('/logout','UserController@logout')->name('logout');
